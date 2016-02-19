@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+	<!-- 这里定义JPA相关配置。总体上来说，这里使用以Hibernate为Provider的JPA2.0方案，使用Spring来进行集成，不依赖于容器的JPA实现。 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="#{env['jdbcDriver']}" />
+		<property name="testOnBorrow" value="#{env['jdbcTestOnBorrow']?: true}"/>
+		<property name="testOnReturn" value="#{env['jdbcTestOnReturn']?: false}"/>
+		<property name="testWhileIdle" value="#{env['jdbcTestWhileIdle']?: true}"/>
+		<property name="validationQuery" value="#{env['jdbcTestSql']}"/>
+		<property name="maxActive" value="#{env['jdbcMaxActive'] ?: 20}"/>
+		<property name="maxIdle" value="#{env['jdbcMaxIdle'] ?: 10 }"/>
+		<property name="minIdle" value="#{env['jdbcMinIdle'] ?: 1 }"/>
+		<property name="minEvictableIdleTimeMillis" value="#{env['jdbcMinEvictableIdleTimeMillis'] ?: 1800000}"/>
+		<property name="url" value="#{env.jdbcUrl}" />
+		<property name="username" value="#{env.jdbcUsername}" />
+		<property name="password" value="#{env.jdbcPassword}" />
+	</bean>
+	
+	<bean class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+</beans>

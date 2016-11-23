@@ -5,7 +5,7 @@
 	<artifactId>afs-www</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.0-SNAPSHOT</version>
-	<name>afs-www Maven Webapp</name>
+	<name>afs-www Maven Webapp test</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<afs.version>1.0.0-SNAPSHOT</afs.version>
